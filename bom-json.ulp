@@ -1,0 +1,39 @@
+#require 4.1105
+
+#usage "en: <b>Export a Bill Of Materials as JSON</b>\n"
+	"<p>"
+	"Saves a project's <i>Bill Of Material</i> as <i>project</i>.json."
+	"<author>Author: psd@solderpad.com</author>";
+
+
+if (!schematic) {
+	dlgMessageBox(usage + "<hr><b>ERROR: No schematic!</b><p>\nThis program can only work in the schematic editor.");
+	exit(1);
+}
+
+schematic(SCH) {
+
+	string FileName;
+	string json;
+	string sep = "";
+
+	FileName = filesetext(SCH.name, ".json");
+
+	output(FileName, "wt") {
+		printf("{\n");
+		SCH.parts(P) {
+			if (P.device.package) {
+				json = sep + "\t{"
+					+ " 'name': '" + P.name + "',"
+					+ " 'value': '" + P.value + "',"
+					+ " 'device': '" + P.device.name + "',"
+					+ " 'package': '" + P.device.package.name + "',"
+					+ " 'headline': '" + P.device.headline + "'"
+				    + " }";
+				sep = ",\n";
+				printf("%s", json);
+			}
+		}
+		printf("\n}\n");
+	}
+}
