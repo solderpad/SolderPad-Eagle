@@ -17,7 +17,7 @@ schematic(SCH) {
 	string json;
 	string sep = "";
 
-	FileName = filesetext(SCH.name, ".json");
+	FileName = filesetext("bom", ".json");
 
 	output(FileName, "wt") {
 		printf("{\n");
