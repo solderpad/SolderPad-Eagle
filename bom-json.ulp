@@ -20,20 +20,20 @@ schematic(SCH) {
 	FileName = filesetext("bom", ".json");
 
 	output(FileName, "wt") {
-		printf("{\n");
+		printf("{\"bom\": [\n");
 		SCH.parts(P) {
 			if (P.device.package) {
 				json = sep + "\t{"
-					+ " 'name': '" + P.name + "',"
-					+ " 'value': '" + P.value + "',"
-					+ " 'device': '" + P.device.name + "',"
-					+ " 'package': '" + P.device.package.name + "',"
-					+ " 'headline': '" + P.device.headline + "'"
+					+ " \"name\": \"" + P.name + "\","
+					+ " \"value\": \"" + P.value + "\","
+					+ " \"device\": \"" + P.device.name + "\","
+					+ " \"package\": \"" + P.device.package.name + "\","
+					+ " \"headline\": \"" + P.device.headline + "\""
 				    + " }";
 				sep = ",\n";
 				printf("%s", json);
 			}
 		}
-		printf("\n}\n");
+		printf("\n]}\n");
 	}
 }
