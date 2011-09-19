@@ -22,14 +22,14 @@ schematic(SCH) {
 
 	output(FileName, "wt") {
 		printf("{\n");
-		printf("\titems\": [\n");
+		printf("\t\"items\": [\n");
 		SCH.parts(P) {
 			if (P.device.package) {
-				json = sep + "\t{\n"
-					+ "\t\t\"designator\": \"" + P.name + "\",\n"
-					+ "\t\t\"value\": \"" + P.value + "\",\n"
-					+ "\t\t\"description\": \"" + P.device.headline + "\"\n"
-				    + "\t}";
+				json = sep + "\t\t{\n"
+					+ "\t\t\t\"designator\": \"" + P.name + "\",\n"
+					+ "\t\t\t\"value\": \"" + P.value + "\",\n"
+					+ "\t\t\t\"description\": \"" + P.device.headline + "\"\n"
+				    + "\t\t}";
 				sep = ",\n";
 				printf("%s", json);
 			}
