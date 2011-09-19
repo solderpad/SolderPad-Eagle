@@ -2,9 +2,10 @@
 
 #usage "en: <b>Export a Bill Of Materials as JSON</b>\n"
 	"<p>"
-	"Saves a project's <i>Bill Of Material</i> as <i>project</i>.json."
-	"<author>Author: psd@solderpad.com</author>";
-
+	" Saves a project's <i>Bill Of Material</i> as a <i>project</i>.json"
+	" suitable for uploading to http://solderpad.com"
+	" <author>Author: psd@solderpad.com</author>"
+	"</p>";
 
 if (!schematic) {
 	dlgMessageBox(usage + "<hr><b>ERROR: No schematic!</b><p>\nThis program can only work in the schematic editor.");
@@ -20,20 +21,19 @@ schematic(SCH) {
 	FileName = filesetext("bom", ".json");
 
 	output(FileName, "wt") {
-		printf("{\"bom\": [\n");
+		printf("{\n");
+		printf("\titems\": [\n");
 		SCH.parts(P) {
 			if (P.device.package) {
-				json = sep + "\t{"
-					+ " \"name\": \"" + P.name + "\","
-					+ " \"value\": \"" + P.value + "\","
-					+ " \"device\": \"" + P.device.name + "\","
-					+ " \"package\": \"" + P.device.package.name + "\","
-					+ " \"headline\": \"" + P.device.headline + "\""
-				    + " }";
+				json = sep + "\t{\n"
+					+ "\t\t\"designator\": \"" + P.name + "\",\n"
+					+ "\t\t\"value\": \"" + P.value + "\",\n"
+					+ "\t\t\"description\": \"" + P.device.headline + "\"\n"
+				    + "\t}";
 				sep = ",\n";
 				printf("%s", json);
 			}
 		}
-		printf("\n]}\n");
+		printf("\n\t]\n}\n");
 	}
 }
