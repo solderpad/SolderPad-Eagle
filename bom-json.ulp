@@ -12,8 +12,22 @@ if (!schematic) {
 	exit(1);
 }
 
-schematic(SCH) {
+string escape(string s) {
+char c = '"';
+int pos = 0;
+string tp;
 
+	while ((pos = strchr(s, c, pos)) > -1) {
+		tp = strsub(s, 0, pos);
+		tp += "\\";
+		tp += strsub(s, pos);
+		s = tp;
+		pos += 2;
+	}
+	return s;
+}
+
+schematic(SCH) {
 	string FileName;
 	string json;
 	string sep = "";
@@ -26,9 +40,9 @@ schematic(SCH) {
 		SCH.parts(P) {
 			if (P.device.package) {
 				json = sep + "\t\t{\n"
-					+ "\t\t\t\"designator\": \"" + P.name + "\",\n"
-					+ "\t\t\t\"value\": \"" + P.value + "\",\n"
-					+ "\t\t\t\"description\": \"" + P.device.headline + "\"\n"
+					+ "\t\t\t\"designator\": \"" + escape(P.name) + "\",\n"
+					+ "\t\t\t\"value\": \"" + escape(P.value) + "\",\n"
+					+ "\t\t\t\"description\": \"" + escape(P.device.headline) + "\"\n"
 				    + "\t\t}";
 				sep = ",\n";
 				printf("%s", json);
