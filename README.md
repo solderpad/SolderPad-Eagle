@@ -9,4 +9,9 @@ Alternatively, copy the scripts into the Eagle/ulp directory and run them from t
 	$ cd .solderpad
 	$ eagle -C'RUN bom-json.ulp; QUIT;' ../myproject.sch
 
+You might also like to generate the schematic and board images from the command-line:
+
+	$ eagle -C'EXPORT IMAGE schematic.png 600;QUIT' ../*sch
+	$ eagle -C'EXPORT IMAGE board.png 600;QUIT' ../*brd
+
 It's possible to incorporate these scripts into Makefile or run as a git hook so the export is run automatically beofore pushing to SolderPad.
